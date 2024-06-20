@@ -1,0 +1,5 @@
+Add Parameters: Expand the function to include additional parameters age, email, and phone.
+Additional Functionality:
+Use these additional parameters to create a more detailed greeting message.
+Include the new information in the returned message.
+Maintain Original Purpose: The function should still greet the person by their name but should now provide a more comprehensive greeting message if any of the value is unavailable then raise error. New Greeting mesage: "Hello, {name}! You are {age} years old. We have your email as {email} and your phone number as {phone}."

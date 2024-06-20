@@ -82,8 +82,9 @@ def modify_callee(instruction, func_name, functions, calls):
             output = chat_completion_request(message)
             modified_code = output.choices[0].message.content
             modified_code = modified_code.split("```python")[1].split("```")[0]
+            if isinstance(modified_code, list):
+                modified_code = "".join(modified_code)
             print(modified_code)
-            print()
 
             folder = os.path.dirname(file_path)
             file_name = os.path.basename(file_path)
