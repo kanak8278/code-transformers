@@ -1,6 +1,7 @@
 import difflib
 import ast
 import re
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 
 def remove_comments_and_docstrings(source):
     """Remove comments and docstrings from the source code, preserving indentation."""
@@ -30,6 +31,10 @@ def remove_comments_and_docstrings(source):
     
     return "\n".join(lines)
 
+def tokenize_code(source):
+    """Tokenize the source code into a list of tokens."""
+    return re.findall(r'\w+|\S', source)
+
 def compare_files(file1, file2):
     with open(file1, "r") as f1, open(file2, "r") as f2:
         content1 = f1.read()
@@ -50,8 +55,17 @@ def compare_files(file1, file2):
     # Calculate the similarity ratio
     sm = difflib.SequenceMatcher(None, lines1, lines2)
     similarity_ratio = sm.ratio()
+
+    # Tokenize the cleaned content
+    tokens1 = tokenize_code(clean_content1)
+    tokens2 = tokenize_code(clean_content2)
+
+    # Calculate BLEU score with smoothing function
+    chencherry = SmoothingFunction()
+    bleu_score = sentence_bleu([tokens1], tokens2, smoothing_function=chencherry.method1)
     
-    return diff_list, similarity_ratio
+    
+    return diff_list, similarity_ratio, bleu_score
 
 # Example usage
 if __name__ == "__main__":
@@ -64,7 +78,8 @@ if __name__ == "__main__":
     # Parse the arguments
     args = parser.parse_args()
     # Compare the files
-    diff, similarity = compare_files(args.file1, args.file2)
+    diff, similarity, bleu_score = compare_files(args.file1, args.file2)
 
     print("\n".join(diff))
     print(f"\nSimilarity ratio: {similarity:.2f}")
+    print(f"\nBLEU Score: {bleu_score:.2f}")
