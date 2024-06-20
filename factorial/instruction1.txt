@@ -1,0 +1,6 @@
+You are given a simple recursive function that calculates the factorial of a number. Enhance this function to use memoization to cache previously calculated results. Follow the steps below to achieve this.
+
+Define a global dictionary factorial_cache to store the cached results.
+Modify the factorial function to check if the result for n is already in the cache. If so, return the cached result.
+If n is 0, return 1 (base case).
+If the result is not cached, compute the factorial recursively and store the result in the cache before returning it.

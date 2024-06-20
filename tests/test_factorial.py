@@ -1,6 +1,6 @@
 # test_factorial.py
 import unittest
-from your_module import factorial
+from factorial.new_helper import factorial, factorial_cache
 
 class TestFactorial(unittest.TestCase):
     
