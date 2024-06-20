@@ -28,21 +28,46 @@ def find_functions(node, functions, file_path):
 def find_function_calls(node, calls, file_path, functions):
     if node.type == "call":
         function_name = None
+        parent_function = None
+        parent_start = None
+        parent_end = None
+
         for child in node.children:
             if child.type == "identifier":
                 function_name = child.text.decode("utf8")
+
         if function_name:
-            # Check if the call is within its own function definition
             call_start, call_end = node.start_point, node.end_point
-            is_own_function_call = False
+            is_within_own_function = False
+
+            # Check if the call is within its own function definition
             for func_name, func_info in functions.items():
                 if func_info['file_path'] == file_path and \
                    func_info['start_point'] <= call_start <= func_info['end_point']:
                     if func_name == function_name:
-                        is_own_function_call = True
+                        is_within_own_function = True
                         break
-            if not is_own_function_call:
-                calls.append((function_name, file_path, node.start_point, node.end_point))
+
+            if not is_within_own_function:
+                # Check if the call is within any other function definition
+                for func_name, func_info in functions.items():
+                    if func_info['file_path'] == file_path and \
+                       func_info['start_point'] <= call_start <= func_info['end_point']:
+                        parent_function = func_name
+                        parent_start = func_info['start_point']
+                        parent_end = func_info['end_point']
+                        break
+
+                calls.append({
+                    "function_name": function_name,
+                    "file_path": file_path,
+                    "call_start": call_start,
+                    "call_end": call_end,
+                    "parent_function": parent_function,
+                    "parent_start": parent_start,
+                    "parent_end": parent_end
+                })
+
     for child in node.children:
         find_function_calls(child, calls, file_path, functions)
 

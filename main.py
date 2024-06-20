@@ -13,7 +13,7 @@ def main(repo_path, instruction1, instruction2):
     print("\nFunction calls found in the repository:")
     for call in calls:
         print(
-            f"Function call: {call[0]}, File: {call[1]}, Start: {call[2]}, End: {call[3]}"
+            f'Function call: {call["function_name"]}, File: {call["file_path"]}, Start: {call["call_start"]}, End: {call["call_end"]}'
         )
 
     modify_caller(instruction1, "factorial", functions)

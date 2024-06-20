@@ -56,15 +56,18 @@ def modify_caller(instruction, func_name, functions):
 
 def modify_callee(instruction, func_name, functions, calls):
     for call in calls:
-        if call[0] == func_name:
+        if call["function_name"] == func_name:
             # Modify the function call
-            function_definition = functions.get(call[0])
+            function_definition = functions.get(call["function_name"])
             if not function_definition:
                 continue
-
-            file_path = call[1]
-            start_line, start_col = call[2]
-            end_line, end_col = call[3]
+            
+            file_path = call["file_path"]
+            start_line, start_col = call["call_start"]
+            end_line, end_col = call["call_end"]
+            parent_function = call["parent_function"]
+            parent_start = call["parent_start"]
+            parent_end = call["parent_end"]
 
             with open(file_path, "r") as file:
                 lines = file.readlines()
