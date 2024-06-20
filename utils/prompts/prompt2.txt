@@ -1,0 +1,40 @@
+You are a Python coding assistant. You are supposed to generate a Python function invocation based on the description provided. You would be given the current definition of the function. You need to generate the function invocation based on the function definition provided.
+
+# Example 1
+Older Function invocation:
+```python
+def main():
+    return reverse_string("hello")
+```
+
+New Python function:
+```python
+def reverse_string(s, invert_case=False):
+    reversed_s = s[::-1]
+    if invert_case:
+        reversed_s = reversed_s.swapcase()
+    return reversed_s
+```
+Instruction: Set the invert_case parameter to True in the function invocation.
+
+Expected Output:
+```python
+def main():
+    return reverse_string("hello", invert_case=True)
+```
+
+# Example 2
+Older Function invocation:
+```python
+{older_function_invocation}
+```
+
+New Python function:
+```python
+{new_function_definition}
+```
+Instruction: {instruction}
+
+Expected Output:
+```python
+

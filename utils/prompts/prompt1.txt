@@ -1,0 +1,38 @@
+You are a Python coding assistant. You are supposed to generate a Python function based on the description provided.
+You will be given the previous representation of the function and description of the new implementation. 
+Use these to provide a correct implementation of the function.
+
+# Example 1
+Below is an example of the one such instance.
+Old Python function:
+```python
+def reverse_string(s):
+    return s[::-1]
+```
+Instruction: You are given a simple function that reverses a string. Enhance this function to optionally invert the case of the characters in the reversed string. Follow the steps below to achieve this.
+Modify the function to accept an additional optional parameter invert_case with a default value of False.
+Reverse the input string as before.
+If invert_case is True, invert the case of the characters in the reversed string using the swapcase() method.
+Return the resulting string.
+
+New Python function:
+```python
+def reverse_string(s, invert_case=False):
+    reversed_s = s[::-1]
+    if invert_case:
+        reversed_s = reversed_s.swapcase()
+    return reversed_s
+```
+
+# Example 2
+Old Python function:
+```python
+{old_function}
+```
+Instruction: {instruction}
+
+New Python function:
+```python
+
+
+
