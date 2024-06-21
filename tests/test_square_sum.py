@@ -1,5 +1,5 @@
 import unittest
-from square_sum.new_helper import sum_of_squares
+from examples.square_sum.new_helper import sum_of_squares
 
 class TestSumOfSquaresFormula(unittest.TestCase):
     

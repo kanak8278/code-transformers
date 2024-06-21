@@ -2,4 +2,4 @@
 poetry.lock
 **/__pycache__/
 **/new_call.py
-**/new_helper.py
+**/*new_helper.py
