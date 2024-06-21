@@ -37,6 +37,7 @@ if __name__ == "__main__":
     parser.add_argument("--file1", "-f1", type=str, help="Path to the first file.")
     parser.add_argument("--file2", "-f2", type=str, help="Path to the second file.")
     args = parser.parse_args()
-    result = compare_ast(args.file1, args.file2)
+    diff, similarity_ratio = compare_ast(args.file1, args.file2)
 
-    print(result)
+    print("Diff: ", diff)
+    print(f"\nSimilarity ratio: {similarity_ratio:.2f}")
