@@ -13,10 +13,6 @@ with open(prompt1_path, "r") as file:
 with open(prompt2_path, "r") as file:
     prompt2 = file.read()
 
-
-
-
-
 # Function to use an LLM to modify function definitions and calls
 def modify_caller(instruction, func_name, functions):
     for function_name, function in functions.items():
@@ -31,7 +27,9 @@ def modify_caller(instruction, func_name, functions):
             with open(file_path, "r") as file:
                 lines = file.readlines()
             original_code = "".join(lines[start_line : end_line + 1])
-            
+            print("Original Code")
+            print(original_code)
+            print()
             message = [
                 {
                     "role": "system",
@@ -41,20 +39,24 @@ def modify_caller(instruction, func_name, functions):
             output = chat_completion_request(message)
             modified_code = output.choices[0].message.content
             modified_code = modified_code.split("```python")[1].split("```")[0]
+            function[func_name] = modified_code
+
+            print("Modified Code")
             print(modified_code)
             print()
-            function[func_name] = modified_code
             
-            
+            # insert the modified code to the same file in between the start_line and end_line
+            code = "".join(lines[:start_line]) + modified_code + "".join(lines[end_line + 1 :])   
             folder = os.path.dirname(file_path)
             file_name = os.path.basename(file_path)
             new_file_path = os.path.join(folder, f"new_{file_name}")
             with open(new_file_path, "w") as file:
-                file.write("".join(modified_code))
+                file.write(code)
             
 
 
 def modify_callee(instruction, func_name, functions, calls):
+    print(func_name)
     for call in calls:
         if call["function_name"] == func_name:
             # Modify the function call
@@ -68,11 +70,15 @@ def modify_callee(instruction, func_name, functions, calls):
             parent_function = call["parent_function"]
             parent_start = call["parent_start"]
             parent_end = call["parent_end"]
-
+           
             with open(file_path, "r") as file:
                 lines = file.readlines()
-
-            original_code = lines
+            
+            if parent_function:
+                original_code = "".join(lines[parent_start[0] : parent_end[0] + 1])
+            else:
+                original_code = lines
+            
             message = [
                 {
                     "role": "system",
@@ -86,8 +92,13 @@ def modify_callee(instruction, func_name, functions, calls):
                 modified_code = "".join(modified_code)
             print(modified_code)
 
+            if parent_function:
+                code = "".join(lines[:parent_start[0]]) + modified_code + "".join(lines[parent_end[0] + 1 :])
+            else:
+                code = modified_code
+
             folder = os.path.dirname(file_path)
             file_name = os.path.basename(file_path)
             new_file_path = os.path.join(folder, f"new_{file_name}")
             with open(new_file_path, "w") as file:
-                file.write("".join(modified_code))
+                file.write("".join(code))
