@@ -21,6 +21,8 @@
 
 3. **Calculate Similarity Ratio**:
    Produces a numeric score representing the similarity between the two files, helping to quantify the extent of differences.
+4. **Diff based Bleu Score**:
+   The diff based Bleu score is calculated by comparing the diff of the two files and calculating the Bleu score based on the diff. This helps in understanding the similarity between the two files based on the diff.
 
 
 ## Code Compilation
@@ -28,3 +30,4 @@ Used `py_compile` to compile the code and check for syntax errors. This is done 
 
 ## Unit tests & Code Execution
 Run the unit tests on the modified functions to ensure that the changes do not affect the functionality. The modified functions are executed to generate the output files and check for any runtime errors. 
+
