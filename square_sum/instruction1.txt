@@ -1,0 +1,4 @@
+mprove efficiency, the function was modified to use a mathematical formula that directly computes the sum of the squares of the first n natural numbers. The formula is:
+
+Sum of squares = n(n+1)(2n+1)/6
+and then return the sum.
