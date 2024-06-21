@@ -35,10 +35,7 @@ def tokenize_code(source):
     """Tokenize the source code into a list of tokens."""
     return re.findall(r'\w+|\S', source)
 
-def compare_files(file1, file2):
-    with open(file1, "r") as f1, open(file2, "r") as f2:
-        content1 = f1.read()
-        content2 = f2.read()
+def compare_files(content1, content2):
     
     # Remove comments and docstrings
     clean_content1 = remove_comments_and_docstrings(content1)
@@ -77,8 +74,13 @@ if __name__ == "__main__":
     parser.add_argument("--file2", "-f2", help="Second Python file")
     # Parse the arguments
     args = parser.parse_args()
+    
     # Compare the files
-    diff, similarity, bleu_score = compare_files(args.file1, args.file2)
+    with open(args.file1, "r") as f1, open(args.file2, "r") as f2:
+        content1 = f1.read()
+        content2 = f2.read()
+
+    diff, similarity, bleu_score = compare_files(content1, content2)
 
     print("\n".join(diff))
     print(f"\nSimilarity ratio: {similarity:.2f}")

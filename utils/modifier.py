@@ -1,7 +1,7 @@
 import os
 from .llm import chat_completion_request
 import json
-# get current folder path
+
 folder = os.path.dirname(os.path.abspath(__file__))
 # get the prompt path which is relative prompts/system.txt
 prompt_path = os.path.join(folder, "prompts")
@@ -27,9 +27,6 @@ def modify_caller(instruction, func_name, functions):
             with open(file_path, "r") as file:
                 lines = file.readlines()
             original_code = "".join(lines[start_line : end_line + 1])
-            print("Original Code")
-            print(original_code)
-            print()
             message = [
                 {
                     "role": "system",
@@ -38,6 +35,8 @@ def modify_caller(instruction, func_name, functions):
             ]
             output = chat_completion_request(message)
             modified_code = output.choices[0].message.content
+            print("Modified Code")
+            print(modified_code)
             modified_code = modified_code.split("```python")[1].split("```")[0]
             function[func_name] = modified_code
 
@@ -56,7 +55,6 @@ def modify_caller(instruction, func_name, functions):
 
 
 def modify_callee(instruction, func_name, functions, calls):
-    print(func_name)
     for call in calls:
         if call["function_name"] == func_name:
             # Modify the function call

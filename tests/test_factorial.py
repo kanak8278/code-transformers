@@ -29,5 +29,21 @@ class TestFactorial(unittest.TestCase):
     def test_factorial_large_number(self):
         self.assertEqual(factorial(20), 2432902008176640000)
 
+class CountingTestResult(unittest.TextTestResult):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.success_count = 0
+
+    def addSuccess(self, test):
+        super().addSuccess(test)
+        self.success_count += 1
+
+def run_tests():
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestFactorial)
+    runner = unittest.TextTestRunner(resultclass=CountingTestResult)
+    result = runner.run(suite)
+    return result
+
 if __name__ == '__main__':
-    unittest.main()
+    result = run_tests()
+    print(f"Number of test cases passed: {result.success_count}")

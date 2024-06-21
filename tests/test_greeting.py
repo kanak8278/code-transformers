@@ -1,3 +1,4 @@
+# test_greet_function.py
 import unittest
 from examples.greeting.new_helper import greeting
 
@@ -31,5 +32,21 @@ class TestGreetFunction(unittest.TestCase):
         with self.assertRaises(ValueError):
             greeting("John", 30, "", None)
 
+class CountingTestResult(unittest.TextTestResult):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.success_count = 0
+
+    def addSuccess(self, test):
+        super().addSuccess(test)
+        self.success_count += 1
+
+def run_tests():
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestGreetFunction)
+    runner = unittest.TextTestRunner(resultclass=CountingTestResult)
+    result = runner.run(suite)
+    return result
+
 if __name__ == '__main__':
-    unittest.main()
+    result = run_tests()
+    print(f"Number of test cases passed: {result.success_count}")

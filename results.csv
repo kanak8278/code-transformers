@@ -1,0 +1,4 @@
+folder,similarity,bleu_score,is_call_error,is_helper_error,call_desc,call_helper,test_passed
+sum_of_squares,0.9333333333333333,1.0,False,True,An unexpected error occurred during the compilation of examples/sum_of_squares/new_call.py: [Errno 2] No such file or directory: 'examples/sum_of_squares/new_call.py',Compilation of examples/sum_of_squares/new_helper.py succeeded.,7
+factorial,0.6956521739130435,0.8395754195180313,True,True,Compilation of examples/factorial/new_call.py succeeded.,Compilation of examples/factorial/new_helper.py succeeded.,7
+greeting,0.2857142857142857,0.5574961583774956,True,True,Compilation of examples/greeting/new_call.py succeeded.,Compilation of examples/greeting/new_helper.py succeeded.,6
